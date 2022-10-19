@@ -5,10 +5,16 @@
   --largeFont: 1.5rem;
   --emptyPadding: 1.4rem
 }
+html{
+  transition: all 0.5s;
+}
 body {
   font-family: 'Inconsolata', monospace;
   overflow-x: auto;
   width: 100%;
+  position: relative;
+  background-color: #fff;
+  z-index: 1;
 }
 .game--form{
   display: flex;
@@ -67,4 +73,61 @@ input:focus{
 }
 .white{
   color: white;
+}
+
+.darkmode-container{
+  margin: auto;
+  width: 90%;
+  text-align: right;
+}
+body:has(.darkmode-container>#darkmode:checked){
+  background-color: aqua;  
+}
+
+.dark{
+  filter:invert(1);
+  transition: all 0.5s;
+}
+
+.saving-modal, .leaderboard-modal{
+  backdrop-filter: blur(5px);
+  position: absolute;
+  width: 100%; 
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 2rem;
+  transition: all 1s;
+}
+.saving-modal-show, .leaderboard-modal-show{
+  display: flex;
+  transition: all 1s;
+}
+.button{
+  font-weight: bolder;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 1%;
+}
+.button:hover::after{
+  content: "";
+  display: block;
+  width: 100%;
+  background-color: black;
+  height: 1px;
+  transition: all 0.2s;
+}
+.button::after{
+  content: "";
+  display: block;
+  width: 0%;
+  background-color: black;
+  height: 1px;
+  transition: all 1s;
+}
+#leaderboard-button{
+  margin: auto;
+  width: fit-content;
 }

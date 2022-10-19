@@ -1,5 +1,6 @@
+import CookieManager from "./CookieManager.js";
 import GameUtils from "./GameUtils.js";
-import { types } from "./script.js";
+import { types, showSaveTimeModal } from "./script.js";
 import Tile from "./Tile.js";
 
 class Game {
@@ -34,14 +35,18 @@ class Game {
 
   winningCondition() {
     for (const i of this.planeArray) {
-      console.log(i)
-      if (i.underField == types.mine && !i.flagged) {
+      if (
+        i.underField != document.getElementById(i.id).innerHTML &&
+        i.underField != types.mine
+      ) {
         return 0;
       }
-      clearInterval(this.timerInterval);
-      GameUtils.win(this.planeArray);
     }
+    GameUtils.win(this.planeArray);
+    clearInterval(this.timerInterval);
+    showSaveTimeModal();
   }
+
   addOnClicksToTile(element) {
     const tile = document.getElementById(element.id);
     tile.addEventListener("click", () => {
@@ -56,6 +61,7 @@ class Game {
         this.timerUI();
       }
       GameUtils.tileSearch(element);
+      this.winningCondition();
     });
     tile.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -64,9 +70,6 @@ class Game {
         this.flagsHTML = this.flagsUsed;
         tile.innerHTML = types.flag;
         element.flagged = true;
-        if (this.flagsUsed == this.mines) {
-          this.winningCondition();
-        }
       } else if (element.flagged) {
         this.flagsUsed--;
         this.flagsHTML = this.flagsUsed;

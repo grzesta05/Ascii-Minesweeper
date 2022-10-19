@@ -2,7 +2,6 @@ import { types } from "./script.js";
 
 class GameUtils {
   static win(tiles) {
-    
     tiles.forEach((element) => {
       this.invalidateEvent(element);
     });
@@ -10,11 +9,9 @@ class GameUtils {
   static lose(tiles) {
     tiles.forEach((element) => {
       this.invalidateEvent(element);
-      if(element.underField == types.mine)
-        document.getElementById(element.id).innerHTML = types.mine
+      if (element.underField == types.mine)
+        document.getElementById(element.id).innerHTML = types.mine;
     });
-
-
   }
 
   static invalidateEvent(object) {
@@ -29,8 +26,8 @@ class GameUtils {
       switch (tile.underField) {
         //blank space uwu
         case 0:
-          tileHTML.innerHTML = types.empty;  
-        this.invalidateEvent(tile);
+          tileHTML.innerHTML = types.empty;
+          this.invalidateEvent(tile);
           tile.neighbours
             .filter((element) => element.enabled)
             .forEach((element) => {
@@ -60,12 +57,11 @@ class GameUtils {
         errorCode: "Values You entered aren't a number!",
       };
     }
-    if(values[2] < 1)
-    {
-      return{
+    if (values[2] < 1) {
+      return {
         response: false,
-        errorCode: "No mines? Isnt that too easy?"
-      }
+        errorCode: "No mines? Isnt that too easy?",
+      };
     }
     if (values[2] > (values[0] - 1) * (values[1] - 1)) {
       return {
